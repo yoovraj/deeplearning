@@ -81,16 +81,16 @@ import statsmodels.formula.api as sm
 X = np.append(arr = np.ones((891,1)).astype(int), values = X, axis=1)
 
 # initialize with all the variables (all - in)
-# [C,  0, 2,4,5,6,7,9]
-X_opt = X[:,[0, 1, 2, 3, 4, 5, 6, 7]]
+# [C,  0,1,2,3,4,5,6]
+X_opt = X_train[:,[0, 1, 2, 3, 4, 5, 6]]
 
 # select significance level to stay in the model SL=0.05
 # 
-regressor_OLS = sm.OLS(endog = Y, exog = X_opt).fit()
+regressor_OLS = sm.OLS(endog = Y_train, exog = X_opt).fit()
 regressor_OLS.summary()
 
 
-# [2,4,5,6]
-X_opt = X[:,[0, 1, 2, 3, 4]]# 
-regressor_OLS = sm.OLS(endog = Y, exog = X_opt).fit()
+# [C,  0,1,2,3,4,5,6]
+X_opt = X_train[:,[0, 1, 2, 3, 6]]# 
+regressor_OLS = sm.OLS(endog = Y_train, exog = X_opt).fit()
 regressor_OLS.summary()
