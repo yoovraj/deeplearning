@@ -53,21 +53,29 @@ X_train = sc_X.fit_transform(X_train)
 # Create a classifier here
 #from sklearn.linear_model import LogisticRegression
 #regressor = LogisticRegression(solver='newton-cg', random_state=0)
-
+"""
 from sklearn.neighbors import KNeighborsClassifier
 regressor = KNeighborsClassifier(weights='uniform', 
                                  algorithm='auto',
                                  n_neighbors=50, 
                                  metric='minkowski', 
                                  p=2)
-
 """
+
+
+# Fitting Regression model to the dataset
+# Create a regressor here
+#from sklearn.ensemble import RandomForestRegressor
+#regressor = RandomForestRegressor(n_estimators=300,random_state=0)
+#regressor.fit(X_train,Y)
+
+
 # Fitting Classifier model to the dataset
 # Create a classifier here
 from sklearn.svm import SVC
-regressor = SVC(kernel='rbf', degree=2,probability=True)
+regressor = SVC(kernel='rbf', degree=3)
 regressor.fit(X_train, Y_train)
-"""
+
 
 #from sklearn.tree import DecisionTreeClassifier
 #regressor = DecisionTreeClassifier(random_state=0)
