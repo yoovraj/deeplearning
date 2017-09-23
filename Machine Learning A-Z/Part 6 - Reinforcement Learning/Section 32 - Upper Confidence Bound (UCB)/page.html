@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>Reinforcement learning UCB algorith test</head>
+
+<body>
+
+  <script type="text/javascript">
+  var responseId;
+  function myFunction(id) {
+  httpGetAsync("http://localhost:5002/click?id=" + id,function(message){alert(message);});
+  }
+  function httpGetAsync(theUrl, callback)
+    {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function() { 
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                callback(xmlHttp.responseText);
+        }
+        xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+        xmlHttp.send(null);
+    }
+
+  </script>
+  <table border="1">
+    <tr>
+      <td>1<img id="0" src="one.png" height="150" width="150" onclick="myFunction1(this.id);"></td>
+      <td>2<img id="1" src="two.png" height="150" width="150" onclick="myFunction(this.id);"></td>
+      <td>3<img id="2" src="three.png" height="150" width="150" onclick="myFunction(this.id);"></td>
+      <td>4<img id="3" src="four.png" height="150" width="150" onclick="myFunction(this.id);"></td>
+      <td>5<img id="4" src="five.png" height="150" width="150" onclick="myFunction(this.id);"></td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>7</td>
+      <td>8</td>
+      <td>9</td>
+      <td>10</td>
+    </tr>
+  </table>
+</body>
+</html>
+
+
