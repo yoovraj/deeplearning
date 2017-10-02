@@ -18,14 +18,17 @@ from statistics import mode, mean
 dataset = pd.read_csv('train.csv')
 print("Checking NaN columns")
 print(dataset.isnull().any())
+dataset.corr()
 dataset['Embarked'] = dataset['Embarked'].fillna(mode(dataset['Embarked']))
 dataset['Age'] = dataset['Age'].fillna(mean(dataset['Age'][dataset['Age'].notnull()]))
-
+dataset['Fare'] = dataset['Fare'].fillna(mean(dataset['Fare'][dataset['Fare'].notnull()]))
+dataset['Sex'] = dataset.Sex.apply(lambda x:1 if x == 'male' else 0)
+dataset['Cabin'] = dataset.Cabin.apply(lambda x:len(x.split()) if not pd.isnull(x) else -1000)
 print("Checking NaN columns After the cleaning")
 print(dataset.isnull().any())
-
+dataset.corr()
 ## X is matrix of features
-X_train = dataset.iloc[:, [2,4,5,6,7,9, 11]].values
+X_train = dataset.iloc[:, [2,5,6,7,9,11]].values
 
 ## Y is vector
 Y_train = dataset.iloc[:, 1].values
@@ -33,12 +36,12 @@ Y_train = dataset.iloc[:, 1].values
 # Encoding categorical data
 # Encoding the Independent Variable
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
-labelencoder_X1 = LabelEncoder()
-X_train[:, 1] = labelencoder_X1.fit_transform(X_train[:, 1])
+#labelencoder_X1 = LabelEncoder()
+#X_train[:, 1] = labelencoder_X1.fit_transform(X_train[:, 1])
 
 labelencoder_X6 = LabelEncoder()
-X_train[:, 6] = labelencoder_X6.fit_transform(X_train[:, 6])
-onehotencoder = OneHotEncoder(categorical_features = [6])
+X_train[:, 5] = labelencoder_X6.fit_transform(X_train[:, 5])
+onehotencoder = OneHotEncoder(categorical_features = [5])
 X_train = onehotencoder.fit_transform(X_train).toarray()
 
 # Feature Scaling
@@ -46,13 +49,14 @@ from sklearn.preprocessing import StandardScaler
 sc_X = StandardScaler()
 X_train = sc_X.fit_transform(X_train)
 
-
+X_train.corr()
 
 
 # Fitting Classifier model to the dataset
 # Create a classifier here
 #from sklearn.linear_model import LogisticRegression
 #regressor = LogisticRegression(solver='newton-cg', random_state=0)
+
 """
 from sklearn.neighbors import KNeighborsClassifier
 regressor = KNeighborsClassifier(weights='uniform', 
@@ -87,8 +91,6 @@ regressor.fit(X_train, Y_train)
 #regressor.fit(X_train, Y_train)
 
 
-regressor.fit(X_train, Y_train)
-
 
 
 """ -------------  TEST DATA ----------- """
@@ -99,19 +101,20 @@ print(dataset.isnull().any())
 dataset['Embarked'] = dataset['Embarked'].fillna(mode(dataset['Embarked']))
 dataset['Age'] = dataset['Age'].fillna(mean(dataset['Age'][dataset['Age'].notnull()]))
 dataset['Fare'] = dataset['Fare'].fillna(mean(dataset['Fare'][dataset['Fare'].notnull()]))
+#dataset['Cabin'] = dataset.Cabin.apply(lambda x:1 if not pd.isnull(x) else -10)
 
 print("Checking NaN columns After the cleaning")
 print(dataset.isnull().any())
-
+#2,5,6,7,9,11
 ## X is matrix of features
-X_test = dataset.iloc[:, [1,3,4,5,6,8, 10]].values
+X_test = dataset.iloc[:, [1,4,5,6,8,10]].values
 
 # Encoding categorical data
 # Encoding the Independent Variable
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
-X_test[:, 1] = labelencoder_X1.transform(X_test[:, 1])
+#X_test[:, 1] = labelencoder_X1.transform(X_test[:, 1])
 
-X_test[:, 6] = labelencoder_X6.transform(X_test[:, 6])
+X_test[:, 5] = labelencoder_X6.transform(X_test[:, 5])
 X_test = onehotencoder.transform(X_test).toarray()
 
 # Feature Scaling

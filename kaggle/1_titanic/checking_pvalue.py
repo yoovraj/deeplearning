@@ -14,8 +14,12 @@ import pandas as pd
 
 ## importing the dataset
 dataset = pd.read_csv('train.csv')
+dataset[dataset['Cabin'].notnull()] = 1
+dataset[dataset['Cabin'].isnull()] = 0
+print(dataset.isnull().any())
+
 ## X is matrix of features
-X = dataset.iloc[:, [2,4,5,6]].values
+X = dataset.iloc[:, [2,4,5,6,7,9,10,11]].values
 
 ## Y is vector
 Y = dataset.iloc[:, 1].values
