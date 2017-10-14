@@ -70,10 +70,14 @@ classifier.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accur
 
 # fitting the ANN to training set
 classifier.fit(X_train, Y_train, batch_size=10, epochs=100)
+classifier.save('./model.h5')
+classifier.to_json()
+classifier.to_yaml()
 
 ## predicting a new result with logistic regression
 Y_pred = classifier.predict(X_test)
-Y_pred[:,0]
+Y_pred = Y_pred[:,0]
+Y_pred = (Y_pred > 0.5)
 # Visualizing the polynomial regression
 plt.plot(Y_test, color = 'red')
 plt.plot(Y_pred, color = 'blue')
@@ -84,4 +88,4 @@ plt.show()
 
 # make a confusion matrix
 from sklearn.metrics import confusion_matrix
-cm = confusion_matrix(Y_test, Y_pred[:,0])
+cm = confusion_matrix(Y_test, Y_pred)
